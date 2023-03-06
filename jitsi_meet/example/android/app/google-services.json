@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "925124330844",
+    "project_id": "dlp-app-bb8a0",
+    "storage_bucket": "dlp-app-bb8a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925124330844:android:7a39d78dac0e63aac9ed99",
+        "android_client_info": {
+          "package_name": "com.gunschu.jitsi_meet_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925124330844-s9gn50lqjs6cvv2tck5gf2464nvrh414.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAycaD5x3ZIISSt90Xs7nP-6x5ydp_6EME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925124330844-s9gn50lqjs6cvv2tck5gf2464nvrh414.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
