@@ -1,4 +1,4 @@
-# jitsi_meet_example
+# DLP
 
 Demonstrates how to use the jitsi_meet plugin.
 

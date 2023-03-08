@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jitsi_meet_example/screens/auth/singin_screen.dart';
+import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {

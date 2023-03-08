@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jitsi_meet_example/screens/auth/forgot_password_screen.dart';
-import 'package:jitsi_meet_example/screens/auth/signup_screen.dart';
-import 'package:jitsi_meet_example/services/signup_service.dart';
+import 'package:DLP/screens/auth/forgot_password_screen.dart';
+import 'package:DLP/screens/auth/signup_screen.dart';
+import 'package:DLP/services/signup_service.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
