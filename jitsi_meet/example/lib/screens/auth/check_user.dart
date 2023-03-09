@@ -5,9 +5,6 @@ import 'package:DLP/screens/student/student_dashboard.dart';
 import 'package:DLP/screens/teacher/Teacher_Dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class CheckUser extends StatefulWidget {
@@ -23,7 +20,6 @@ class _CheckUserState extends State<CheckUser> {
     print("object");
     final controller = Get.put(ProfileController());
     final user = FirebaseAuth.instance.currentUser;
-    var userRole;
     readData() async {
       UserModel data = await controller.getUserData();
       final userRole = data.userType;
@@ -42,7 +38,6 @@ class _CheckUserState extends State<CheckUser> {
 
     readData();
 
-    // TODO: implement initState
     super.initState();
   }
 

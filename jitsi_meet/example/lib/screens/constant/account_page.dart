@@ -5,6 +5,7 @@ import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/admin/controllers/profile_controller.dart';
 import 'package:lottie/lottie.dart';
 
+// ignore: must_be_immutable
 class AccountPage extends StatelessWidget {
   var currentUser = FirebaseAuth.instance.currentUser;
 

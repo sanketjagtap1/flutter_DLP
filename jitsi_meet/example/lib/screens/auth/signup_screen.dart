@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:DLP/services/signup_service.dart';
 import 'package:lottie/lottie.dart';
