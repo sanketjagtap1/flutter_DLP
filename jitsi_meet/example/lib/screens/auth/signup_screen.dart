@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:DLP/models/user_model.dart';
+import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:DLP/services/signup_service.dart';
 import 'package:lottie/lottie.dart';
@@ -93,12 +93,10 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  final user = UserModel(
-                      fullName: userNameController.text.trim(),
-                      email: emailController.text.trim(),
-                      phoneNo: mobileController.text.trim(),
-                      password: passwordController.text.trim(),
-                      userId: currentUser!.uid);
+                  var fullName = userNameController.text.trim();
+                  var email = emailController.text.trim();
+                  var phoneNo = mobileController.text.trim();
+                  var password = passwordController.text.trim();
 
                   await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
@@ -106,7 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           password: passwordController.text.trim())
                       .then((value) => {
                             log("User Created"),
-                            sugnUpUser(user),
+                            sugnUpUser(fullName, email, phoneNo, password),
                           });
                 },
                 child: const Text("Sign Up ")),

@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:DLP/screens/admin/account_page.dart';
-import 'package:DLP/screens/admin/admin_dashboard.dart';
-import 'package:DLP/screens/admin/courses_page.dart';
-import 'package:DLP/screens/admin/users_page.dart';
+import 'package:DLP/screens/constant/account_page.dart';
+import 'package:DLP/screens/admin/screens/admin_dashboard.dart';
+import 'package:DLP/screens/constant/courses_page.dart';
+import 'package:DLP/screens/admin/screens/users_page.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
-import 'package:DLP/utils/colors.dart';
 
 class AdminScreen extends StatefulWidget {
   // const AdminScreen({super.key});
@@ -36,7 +35,7 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple.shade900,
+        backgroundColor: Colors.blue,
         title: const Text("DLP"),
         actions: [
           GestureDetector(

@@ -1,8 +1,11 @@
+import 'package:DLP/screens/admin/controllers/profile_controller.dart';
+import 'package:DLP/screens/admin/models/user_model.dart';
+import 'package:DLP/screens/auth/check_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:DLP/screens/admin/admin_screen.dart';
+import 'package:DLP/screens/admin/screens/admin_screen.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:DLP/screens/student/student_dashboard.dart';
 import 'package:DLP/screens/teacher/Teacher_Dashboard.dart';
@@ -23,12 +26,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   User? user;
-  String userRole = 'admin';
+  var userRole = '';
 
   @override
   void initState() {
     super.initState();
     user = FirebaseAuth.instance.currentUser;
+    // readData();
     print(user?.uid.toString());
   }
 
@@ -36,21 +40,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'DLP',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: backgroundColor,
-      ),
-      home: user != null && userRole == 'admin'
-          ? AdminScreen()
-          : user != null && userRole == 'teacher'
-              ? TeacherDashboard()
-              : user != null && userRole == 'student'
-                  ? StudentDashboard()
-                  : LoginScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'DLP',
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: backgroundColor,
+        ),
+        home: CheckUser());
   }
 }
 
 
-// 
+// user != null && userRole == 'admin'
+//           ? AdminScreen()
+//           : user != null && userRole == 'teacher'
+//               ? TeacherDashboard()
+//               : user != null && userRole == 'student'
+//                   ? StudentDashboard()
+//                   : LoginScreen(),
