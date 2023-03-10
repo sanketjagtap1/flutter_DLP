@@ -1,11 +1,13 @@
 import 'package:DLP/screens/admin/controllers/profile_controller.dart';
 import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/admin/screens/admin_screen.dart';
-import 'package:DLP/screens/student/student_dashboard.dart';
-import 'package:DLP/screens/teacher/Teacher_Dashboard.dart';
+import 'package:DLP/screens/auth/singin_screen.dart';
+import 'package:DLP/screens/student/screens/student.dart';
+import 'package:DLP/screens/teacher/teacher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class CheckUser extends StatefulWidget {
   const CheckUser({Key? key}) : super(key: key);
@@ -21,22 +23,29 @@ class _CheckUserState extends State<CheckUser> {
     final controller = Get.put(ProfileController());
     final user = FirebaseAuth.instance.currentUser;
     readData() async {
-      UserModel data = await controller.getUserData();
-      final userRole = data.userType;
-      print(data.userType);
-      if (user != null && userRole == 'admin') {
-        Get.to(() => AdminScreen());
+      if (user != null) {
+        final user = FirebaseAuth.instance.currentUser;
+        UserModel data = await controller.getUserData();
+        final userRole = data.userType;
+        print(data.userType);
+        if (user != null && userRole == 'admin') {
+          Get.to(() => AdminScreen());
+        } else if (user != null && userRole == 'teacher') {
+          Get.to(() => Teacher());
+        } else if (user != null && userRole == 'student') {
+          Get.to(() => Student());
+        }
+      } else {
+        Get.to(() => LoginScreen());
       }
-      if (user != null && userRole == 'teacher') {
-        Get.to(() => TeacherDashboard());
-      }
-      if (user != null && userRole == 'student') {
-        Get.to(() => StudentDashboard());
-      }
+
       // return data.userType; // This should print the fetched data to the console
     }
 
-    readData();
+    Future.delayed(Duration(seconds: 5), () {
+      readData();
+      // code to run after 5 seconds
+    });
 
     super.initState();
   }
@@ -44,9 +53,13 @@ class _CheckUserState extends State<CheckUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text("DLP"),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: Lottie.asset(
+          'assets/splash.json',
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }

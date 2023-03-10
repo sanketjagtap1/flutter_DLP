@@ -29,9 +29,33 @@ class AccountPage extends StatelessWidget {
                           children: [
                             Container(
                               alignment: Alignment.center,
-                              height: 250,
+                              height: 200,
                               child: Lottie.asset(getImageUrl("Male")),
                             ),
+                            if (userData.userType ==
+                                'student') // check if user is a student
+                              GestureDetector(
+                                onTap: () {
+                                  // handle click event
+                                  final userInfo = UserModel(
+                                      fullName: userData.fullName,
+                                      email: userData.email,
+                                      phoneNo: userData.phoneNo,
+                                      password: userData.password,
+                                      userId: userData.userId,
+                                      userType: "teacher");
+
+                                  controller.updateUser(userInfo);
+                                },
+                                child: Text(
+                                  'Become an Instructor',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                              ),
+                            SizedBox(height: 10.0),
                             Card(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -90,8 +114,7 @@ class AccountPage extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             ElevatedButton(
-                                onPressed: () {},
-                                child: Text("Update Profile")),
+                                onPressed: () {}, child: Text("Edit Profile")),
                           ],
                         ),
                       ),

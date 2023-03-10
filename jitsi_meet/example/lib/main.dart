@@ -1,6 +1,4 @@
 import 'package:DLP/screens/auth/check_user.dart';
-import 'package:DLP/screens/teacher/screens/add_course.dart';
-import 'package:DLP/screens/teacher/screens/course_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +39,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: backgroundColor,
         ),
-        home: CourseListPage());
+        home: CheckUser());
   }
 }
-
-
-// user != null && userRole == 'admin'
-//           ? AdminScreen()
-//           : user != null && userRole == 'teacher'
-//               ? TeacherDashboard()
-//               : user != null && userRole == 'student'
-//                   ? StudentDashboard()
-//                   : LoginScreen(),
