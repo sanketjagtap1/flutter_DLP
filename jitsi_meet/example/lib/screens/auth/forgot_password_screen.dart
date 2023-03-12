@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:DLP/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,12 +55,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   try {
                     await FirebaseAuth.instance
                         .sendPasswordResetEmail(email: email)
-                        .then((value) => {
-                              print("Email sent"),
-                              Get.off(() => LoginScreen())
-                            });
+                        .then((value) =>
+                            {print("Email sent"), Get.to(() => LoginScreen())});
+                    showSnackBar(
+                        'Success',
+                        'Password Reset Email Sent On Your Registerd Mail Address',
+                        Colors.green);
                   } on FirebaseAuthException catch (e) {
                     print("Error $e");
+                    showSnackBar('Failed', e.toString(), Colors.red);
                   }
                 },
                 child: Text("Forgot Password")),

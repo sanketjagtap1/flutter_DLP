@@ -16,7 +16,7 @@ class AccountPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           child: FutureBuilder(
-            future: controller.getUserData(),
+            future: controller.getUserData(currentUser?.email),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
@@ -35,17 +35,11 @@ class AccountPage extends StatelessWidget {
                             if (userData.userType ==
                                 'student') // check if user is a student
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   // handle click event
-                                  final userInfo = UserModel(
-                                      fullName: userData.fullName,
-                                      email: userData.email,
-                                      phoneNo: userData.phoneNo,
-                                      password: userData.password,
-                                      userId: userData.userId,
-                                      userType: "teacher");
 
-                                  controller.updateUser(userInfo);
+                                  // print(userData.id);
+                                  controller.updateUser(userData);
                                 },
                                 child: Text(
                                   'Become an Instructor',

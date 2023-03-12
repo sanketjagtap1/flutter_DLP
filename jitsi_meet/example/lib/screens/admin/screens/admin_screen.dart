@@ -1,3 +1,4 @@
+import 'package:DLP/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,24 +34,15 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text("DLP"),
-        actions: [
-          GestureDetector(
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Get.to(() => LoginScreen());
-              },
-              child: const Icon(Icons.logout))
-        ],
-      ),
+      appBar: appBar(),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
+        backgroundColor: isDarkMode ? Colors.black : Colors.blue,
+        selectedItemColor: isDarkMode ? Colors.white : Colors.blue,
+        unselectedItemColor: isDarkMode ? Colors.grey : Colors.black,
         showUnselectedLabels: true,
         currentIndex: _currentIndex,
         onTap: (index) {

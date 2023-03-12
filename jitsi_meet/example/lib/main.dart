@@ -33,12 +33,19 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Get the brightness of the device's system theme
+    // Set the theme mode to system by default
+
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'DLP',
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: backgroundColor,
-        ),
+        theme: ThemeData(
+            // Define your light theme here
+            brightness: Brightness.light),
+        darkTheme: ThemeData(brightness: Brightness.dark
+            // Define your dark theme here
+            ),
+        themeMode: ThemeMode.system,
         home: CheckUser());
   }
 }

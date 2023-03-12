@@ -1,11 +1,9 @@
-import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:DLP/screens/constant/account_page.dart';
 import 'package:DLP/screens/student/screens/ExplorePage.dart';
 import 'package:DLP/screens/student/screens/LearningPage.dart';
-import 'package:DLP/screens/teacher/LecturesPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:DLP/screens/teacher/views/LecturesPage.dart';
+import 'package:DLP/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
@@ -26,23 +24,16 @@ class _StudentState extends State<Student> {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple.shade900,
-        title: const Text("DLP"),
-        actions: [
-          GestureDetector(
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Get.to(() => LoginScreen());
-              },
-              child: const Icon(Icons.logout))
-        ],
-      ),
+      appBar: appBar(),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
+        backgroundColor: isDarkMode ? Colors.black : Colors.blue,
+        selectedItemColor: isDarkMode ? Colors.white : Colors.blue,
+        unselectedItemColor: isDarkMode ? Colors.grey : Colors.black,
         showUnselectedLabels: true,
         currentIndex: _currentIndex,
         onTap: (int index) {

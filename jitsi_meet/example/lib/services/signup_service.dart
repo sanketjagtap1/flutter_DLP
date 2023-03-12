@@ -1,10 +1,9 @@
 import 'package:DLP/repository/user_repository/user_repository.dart';
-import 'package:DLP/screens/admin/controllers/profile_controller.dart';
 import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/admin/screens/admin_screen.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:DLP/screens/student/screens/student.dart';
-import 'package:DLP/screens/teacher/teacher.dart';
+import 'package:DLP/screens/teacher/views/teacher.dart';
 import 'package:DLP/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,24 +33,26 @@ signInUser(String userName, String password, BuildContext context) async {
             .signInWithEmailAndPassword(email: userName, password: password))
         .user;
 
-    final controller = Get.put(ProfileController());
-    final user = FirebaseAuth.instance.currentUser;
+    Future.delayed(Duration(seconds: 1), () async {
+      if (firebaseUser != null) {
+        print(firebaseUser.email);
+        final UserModel userDetails =
+            await userRepo.getUserDetails(firebaseUser.email.toString());
 
-    if (firebaseUser != null) {
-      UserModel data = await controller.getUserData();
-      final userRole = data.userType;
-      print(data.userType);
+        print(userDetails.userType);
 
-      if (user != null && userRole == 'admin') {
-        Get.to(() => AdminScreen());
-      } else if (user != null && userRole == 'teacher') {
-        Get.to(() => Teacher());
-      } else if (user != null && userRole == 'student') {
-        Get.to(() => Student());
+        if (userDetails.userType == 'admin') {
+          Get.to(() => AdminScreen());
+        } else if (userDetails.userType == 'student') {
+          Get.to(() => Student());
+        } else if (userDetails.userType == 'teacher') {
+          Get.to(() => Teacher());
+        }
       }
-    } else {}
+      // code to run after 5 seconds
+    });
   } on FirebaseAuthException catch (e) {
-    showSnackBar(context, e.message!, Colors.red);
+    showSnackBar('error', e.message!, Colors.red);
     print("Error $e");
   }
 }

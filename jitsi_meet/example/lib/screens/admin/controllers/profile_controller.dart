@@ -1,4 +1,5 @@
 import 'package:DLP/screens/admin/models/user_model.dart';
+import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:DLP/repository/user_repository/user_repository.dart';
@@ -9,9 +10,7 @@ class ProfileController extends GetxController {
   User? user = FirebaseAuth.instance.currentUser;
   final _userRepo = Get.put(UserRepository());
 
-  getUserData() async {
-    final email = user?.email ?? null;
-
+  getUserData(email) async {
     if (email != null) {
       return await _userRepo.getUserDetails(email);
     } else {
@@ -24,6 +23,9 @@ class ProfileController extends GetxController {
   }
 
   updateUser(UserModel user) async {
-    await _userRepo.updateUser(user);
+    await _userRepo.updateUser(user).then((value) {
+      FirebaseAuth.instance.signOut();
+      Get.to(LoginScreen());
+    });
   }
 }

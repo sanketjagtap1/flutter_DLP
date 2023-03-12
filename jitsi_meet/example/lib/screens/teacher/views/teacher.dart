@@ -1,8 +1,10 @@
 import 'package:DLP/screens/constant/account_page.dart';
+import 'package:DLP/screens/teacher/views/add_course.dart';
+import 'package:DLP/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:DLP/screens/teacher/CoursesPage.dart';
-import 'package:DLP/screens/teacher/DashboardPage.dart';
-import 'package:DLP/screens/teacher/LecturesPage.dart';
+import 'package:DLP/screens/teacher/views/CoursesPage.dart';
+import 'package:DLP/screens/teacher/views/DashboardPage.dart';
+import 'package:DLP/screens/teacher/views/LecturesPage.dart';
 
 class Teacher extends StatefulWidget {
   const Teacher({Key? key}) : super(key: key);
@@ -22,15 +24,15 @@ class _TeacherState extends State<Teacher> {
   ];
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple.shade900,
-        title: const Text("DLP"),
-      ),
+      appBar: appBar(),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
+        backgroundColor: isDarkMode ? Colors.black : Colors.blue,
+        selectedItemColor: isDarkMode ? Colors.white : Colors.blue,
+        unselectedItemColor: isDarkMode ? Colors.grey : Colors.black,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         items: [

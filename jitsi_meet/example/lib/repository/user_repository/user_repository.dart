@@ -18,7 +18,8 @@ class UserRepository extends GetxController {
               backgroundColor: Colors.green.withOpacity(0.1),
               colorText: Colors.green),
         )
-        .catchError((error, stackTrace) {
+        // ignore: body_might_complete_normally_catch_error
+        .catchError((error, stackTrace) async {
       Get.snackbar("Failed", "Something went wrong. Try Again",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red.withOpacity(0.1),
@@ -44,6 +45,32 @@ class UserRepository extends GetxController {
   }
 
   Future<void> updateUser(UserModel user) async {
-    await _db.collection('Users').doc(user.id).update(user.toJson());
+    print(user.toString());
+    UserModel userData = UserModel(
+        fullName: user.fullName,
+        email: user.email,
+        phoneNo: user.phoneNo,
+        password: user.password,
+        userId: user.userId,
+        userType: "teacher");
+
+    print(userData.userType);
+    await _db
+        .collection('Users')
+        .doc(user.id)
+        .update(userData.toJson())
+        .whenComplete(
+          () => Get.snackbar("Success", "Your Account Has Been Updated.",
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green.withOpacity(0.1),
+              colorText: Colors.green),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar("Failed", "Something went wrong. Try Again",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red.withOpacity(0.1),
+          colorText: Colors.red);
+      print(error.toString());
+    });
   }
 }

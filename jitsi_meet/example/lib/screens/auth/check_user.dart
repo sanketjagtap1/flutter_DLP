@@ -3,7 +3,7 @@ import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/admin/screens/admin_screen.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
 import 'package:DLP/screens/student/screens/student.dart';
-import 'package:DLP/screens/teacher/teacher.dart';
+import 'package:DLP/screens/teacher/views/teacher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,14 +25,14 @@ class _CheckUserState extends State<CheckUser> {
     readData() async {
       if (user != null) {
         final user = FirebaseAuth.instance.currentUser;
-        UserModel data = await controller.getUserData();
+        UserModel data = await controller.getUserData(user!.email);
         final userRole = data.userType;
         print(data.userType);
-        if (user != null && userRole == 'admin') {
+        if (userRole == 'admin') {
           Get.to(() => AdminScreen());
-        } else if (user != null && userRole == 'teacher') {
+        } else if (userRole == 'teacher') {
           Get.to(() => Teacher());
-        } else if (user != null && userRole == 'student') {
+        } else if (userRole == 'student') {
           Get.to(() => Student());
         }
       } else {
