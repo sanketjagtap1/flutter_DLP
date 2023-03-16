@@ -6,7 +6,7 @@ import 'package:DLP/screens/teacher/model/course_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -200,6 +200,7 @@ class _AddCourseFormState extends State<AddCourseForm> {
                             final fees = int.parse(_feesController.text);
 
                             final courseData = CourseModel(
+                                id: Uuid().v4(),
                                 courseName: courseName,
                                 desc: description,
                                 starDate: startDate.toString(),
