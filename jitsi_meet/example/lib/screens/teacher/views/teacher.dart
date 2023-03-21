@@ -17,7 +17,6 @@ class _TeacherState extends State<Teacher> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
-    DashboardPage(),
     CoursesPage(),
     LecturesPage(),
     AccountPage(),
@@ -31,15 +30,13 @@ class _TeacherState extends State<Teacher> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: isDarkMode ? Colors.black : Colors.blue,
-        selectedItemColor: isDarkMode ? Colors.white : Colors.blue,
+        selectedItemColor:
+            isDarkMode ? Colors.white : Color.fromARGB(255, 255, 255, 255),
         unselectedItemColor: isDarkMode ? Colors.grey : Colors.black,
+        showUnselectedLabels: true,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: 'Courses',

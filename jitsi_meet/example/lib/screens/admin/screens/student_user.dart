@@ -3,7 +3,7 @@ import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UsersPage extends StatelessWidget {
+class studentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
@@ -12,7 +12,7 @@ class UsersPage extends StatelessWidget {
           child: Container(
         padding: const EdgeInsets.all(10),
         child: FutureBuilder<List<UserModel>>(
-            future: controller.getAllTeacherUsers(),
+            future: controller.getAllUsers(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {

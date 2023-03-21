@@ -1,7 +1,6 @@
 import 'package:DLP/screens/constant/account_page.dart';
 import 'package:DLP/screens/student/screens/ExplorePage.dart';
-import 'package:DLP/screens/student/screens/LearningPage.dart';
-import 'package:DLP/screens/teacher/views/LecturesPage.dart';
+import 'package:DLP/screens/student/screens/LecturesPage.dart';
 import 'package:DLP/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,6 @@ class _StudentState extends State<Student> {
 
   final List<Widget> _pages = [
     ExplorePage(),
-    LearningPage(),
     LecturesPage(),
     AccountPage(),
   ];
@@ -32,7 +30,8 @@ class _StudentState extends State<Student> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: isDarkMode ? Colors.black : Colors.blue,
-        selectedItemColor: isDarkMode ? Colors.white : Colors.blue,
+        selectedItemColor:
+            isDarkMode ? Colors.white : Color.fromARGB(255, 255, 255, 255),
         unselectedItemColor: isDarkMode ? Colors.grey : Colors.black,
         showUnselectedLabels: true,
         currentIndex: _currentIndex,
@@ -45,10 +44,6 @@ class _StudentState extends State<Student> {
           BottomNavigationBarItem(
             icon: Icon(Icons.explore),
             label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Learning',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.record_voice_over),

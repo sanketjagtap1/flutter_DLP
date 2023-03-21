@@ -1,28 +1,42 @@
 import 'dart:io';
+import 'package:DLP/screens/student/screens/LecturesPage.dart';
+import 'package:DLP/screens/student/screens/student.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 
 class Meeting extends StatefulWidget {
+  final String roomId;
+  final String title;
+  const Meeting({Key? key, required this.roomId, required this.title})
+      : super(key: key);
   @override
   _MeetingState createState() => _MeetingState();
 }
 
 class _MeetingState extends State<Meeting> {
   final serverText = TextEditingController();
-  final roomText = TextEditingController(text: "plugintestroom");
+  final roomText = TextEditingController();
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
-  final nameText = TextEditingController(text: "Plugin Test User");
-  final emailText = TextEditingController(text: "fake@email.com");
+  final nameText = TextEditingController(text: "");
+  final emailText = TextEditingController();
   final iosAppBarRGBAColor =
       TextEditingController(text: "#0080FF80"); //transparent blue
   bool? isAudioOnly = true;
   bool? isAudioMuted = true;
   bool? isVideoMuted = true;
 
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
+    print(user!.email);
+    roomText.text = widget.roomId;
+    subjectText.text = widget.title;
+    subjectText.text = widget.title;
+    emailText.text = user!.email.toString();
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
@@ -42,7 +56,7 @@ class _MeetingState extends State<Meeting> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('DLP'),
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(
@@ -90,20 +104,11 @@ class _MeetingState extends State<Meeting> {
             height: 16.0,
           ),
           TextField(
-            controller: serverText,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Server URL",
-                hintText: "Hint: Leave empty for meet.jitsi.si"),
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
             controller: roomText,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: "Room",
+              enabled: false,
             ),
           ),
           SizedBox(
@@ -114,6 +119,7 @@ class _MeetingState extends State<Meeting> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: "Subject",
+              enabled: false,
             ),
           ),
           SizedBox(
@@ -134,17 +140,8 @@ class _MeetingState extends State<Meeting> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: "Email",
+              enabled: false,
             ),
-          ),
-          SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: iosAppBarRGBAColor,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "AppBar Color(IOS only)",
-                hintText: "Hint: This HAS to be in HEX RGBA format"),
           ),
           SizedBox(
             height: 14.0,
@@ -180,6 +177,7 @@ class _MeetingState extends State<Meeting> {
             child: ElevatedButton(
               onPressed: () {
                 _joinMeeting();
+                Get.to(Student());
               },
               child: Text(
                 "Join Meeting",

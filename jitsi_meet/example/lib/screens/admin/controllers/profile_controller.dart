@@ -22,6 +22,10 @@ class ProfileController extends GetxController {
     return await _userRepo.getAllUsers();
   }
 
+  Future<List<UserModel>> getAllTeacherUsers() async {
+    return await _userRepo.getAllTeacherUsers();
+  }
+
   updateUser(UserModel user) async {
     await _userRepo.updateUser(user).then((value) {
       FirebaseAuth.instance.signOut();

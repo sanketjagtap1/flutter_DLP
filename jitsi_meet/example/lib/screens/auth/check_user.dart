@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckUser extends StatefulWidget {
   const CheckUser({Key? key}) : super(key: key);
@@ -18,6 +19,11 @@ class CheckUser extends StatefulWidget {
 
 class _CheckUserState extends State<CheckUser> {
   @override
+  Future<void> saveData(data) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userData', data.toString());
+  }
+
   void initState() {
     print("object");
     final controller = Get.put(ProfileController());
@@ -27,6 +33,9 @@ class _CheckUserState extends State<CheckUser> {
         final user = FirebaseAuth.instance.currentUser;
         UserModel data = await controller.getUserData(user!.email);
         final userRole = data.userType;
+        // Storing a string value
+        saveData(data);
+
         print(data.userType);
         if (userRole == 'admin') {
           Get.to(() => AdminScreen());

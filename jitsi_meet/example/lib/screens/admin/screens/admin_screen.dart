@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:DLP/screens/constant/account_page.dart';
 import 'package:DLP/screens/admin/screens/admin_dashboard.dart';
 import 'package:DLP/screens/constant/courses_page.dart';
-import 'package:DLP/screens/admin/screens/users_page.dart';
 import 'package:DLP/screens/auth/singin_screen.dart';
+import 'package:DLP/screens/admin/screens/users_page.dart';
+import 'package:DLP/screens/admin/screens/student_user.dart';
 
 class AdminScreen extends StatefulWidget {
   // const AdminScreen({super.key});
@@ -20,8 +21,9 @@ class _AdminScreenState extends State<AdminScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    AdminDashboard(),
+    // AdminDashboard(),
     UsersPage(),
+    studentPage(),
     CoursesPage(),
     AccountPage(),
   ];
@@ -52,12 +54,12 @@ class _AdminScreenState extends State<AdminScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+            icon: Icon(Icons.person),
+            label: 'Teacher',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Users',
+            label: 'Students',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),

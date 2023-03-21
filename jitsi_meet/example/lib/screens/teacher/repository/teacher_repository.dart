@@ -1,4 +1,6 @@
+import 'package:DLP/screens/student/model/enroll_model.dart';
 import 'package:DLP/screens/teacher/model/course_model.dart';
+import 'package:DLP/screens/teacher/model/lecture_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -77,4 +79,47 @@ class TeacherRepository extends GetxController {
   //     print(error.toString());
   //   });
   // }
+
+  // add lecture
+  addLecture(LectureModel lecture) async {
+    await _db
+        .collection("Lecture")
+        .add(lecture.toJson())
+        .whenComplete(
+          () => Get.snackbar("Success", "New Lecture Has Been Added.",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.green.withOpacity(0.1),
+              colorText: Colors.green),
+        )
+        // ignore: body_might_complete_normally_catch_error
+        .catchError((error, stackTrace) async {
+      Get.snackbar("Failed", "Something went wrong. Try Again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.1),
+          colorText: Colors.red);
+      print(error.toString());
+    });
+  }
+
+  Future<List<EnrollModel>> getEnrollStudentsByCourseIs(String courseId) async {
+    final snapshot = await _db
+        .collection("Enroll")
+        .where("CourseId", isEqualTo: courseId)
+        .get();
+
+    final userData =
+        snapshot.docs.map((e) => EnrollModel.fromSnapshot(e)).toList();
+    return userData;
+  }
+
+  Future<List<EnrollModel>> getLectures(String courseId) async {
+    final snapshot = await _db
+        .collection("Lecture")
+        .where("CourseId", isEqualTo: courseId)
+        .get();
+
+    final userData =
+        snapshot.docs.map((e) => EnrollModel.fromSnapshot(e)).toList();
+    return userData;
+  }
 }
