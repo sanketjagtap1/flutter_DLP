@@ -35,6 +35,20 @@ class _CoursesPageState extends State<CoursesPage> {
                         itemBuilder: (c, index) {
                           return Column(
                             children: [
+                              Container(
+                                height: 200,
+                                child: Image.network(
+                                  snapshot.data![index].imgUrl,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return CircularProgressIndicator();
+                                  },
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Icon(Icons.error),
+                                ),
+                              ),
                               Card(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,

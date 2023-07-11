@@ -9,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
 
 class AddCourseForm extends StatefulWidget {
   @override
@@ -186,35 +188,57 @@ class _AddCourseFormState extends State<AddCourseForm> {
                         },
                       ),
                       ElevatedButton(
-                        child: Text('Add'),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            final userId =
-                                FirebaseAuth.instance.currentUser!.uid;
-                            final courseName = _courseNameController.text;
-                            final description = _descriptionController.text;
-                            final startDate = _selectedDate;
-                            final image = _selectedImage;
-                            final duration =
-                                int.parse(_durationController.text);
-                            final fees = int.parse(_feesController.text);
+                          child: Text('Add'),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              final imageName = Uuid().v4() +
+                                  path.extension(_selectedImage!.path);
+                              final Reference imageRef = FirebaseStorage
+                                  .instance
+                                  .ref()
+                                  .child('images/$imageName');
+                              final UploadTask uploadTask =
+                                  imageRef.putFile(_selectedImage!);
 
-                            final courseData = CourseModel(
-                                id: Uuid().v4(),
-                                courseName: courseName,
-                                desc: description,
-                                starDate: startDate.toString(),
-                                duration: duration,
-                                userId: userId,
-                                imgUrl: image.toString(),
-                                fees: fees);
+                              await uploadTask.whenComplete(() async {
+                                try {
+                                  final String imageUrl =
+                                      await imageRef.getDownloadURL();
 
-                            // TODO: Handle saving the course data
-                            teacherRepo.createCourse(courseData);
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      ),
+                                  final userId =
+                                      FirebaseAuth.instance.currentUser!.uid;
+                                  final courseName = _courseNameController.text;
+                                  final description =
+                                      _descriptionController.text;
+                                  final startDate = _selectedDate;
+                                  final imgUrl = imageUrl;
+                                  final duration =
+                                      int.parse(_durationController.text);
+                                  final fees = int.parse(_feesController.text);
+
+                                  final courseData = CourseModel(
+                                    id: Uuid().v4(),
+                                    courseName: courseName,
+                                    desc: description,
+                                    starDate: startDate.toString(),
+                                    duration: duration,
+                                    userId: userId,
+                                    imgUrl: imgUrl,
+                                    fees: fees,
+                                  );
+
+                                  // Save the course data to the database
+                                  teacherRepo.createCourse(courseData);
+
+                                  Navigator.of(context).pop();
+                                } catch (error) {
+                                  print(
+                                      'Error getting image download URL: $error');
+                                  // Handle error if unable to get image download URL
+                                }
+                              });
+                            }
+                          }),
                     ],
                   ),
                   SizedBox(
