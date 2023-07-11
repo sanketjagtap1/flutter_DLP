@@ -5,13 +5,16 @@ import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/admin/controllers/profile_controller.dart';
 import 'package:lottie/lottie.dart';
 
-// ignore: must_be_immutable
 class AccountPage extends StatelessWidget {
   var currentUser = FirebaseAuth.instance.currentUser;
+  final controller = Get.put(ProfileController());
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -21,6 +24,11 @@ class AccountPage extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   UserModel userData = snapshot.data as UserModel;
+
+                  nameController.text = userData.fullName ?? '';
+                  emailController.text = userData.email ?? '';
+                  phoneNoController.text = userData.phoneNo ?? '';
+
                   return Container(
                     child: Form(
                       child: Padding(
@@ -32,13 +40,10 @@ class AccountPage extends StatelessWidget {
                               height: 200,
                               child: Lottie.asset(getImageUrl("Male")),
                             ),
-                            if (userData.userType ==
-                                'student') // check if user is a student
+                            if (userData.userType == 'student')
                               GestureDetector(
                                 onTap: () async {
                                   // handle click event
-
-                                  // print(userData.id);
                                   controller.updateUser(userData);
                                 },
                                 child: Text(
@@ -55,7 +60,7 @@ class AccountPage extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0),
                                 child: TextFormField(
-                                  initialValue: userData.fullName,
+                                  controller: nameController,
                                   decoration: InputDecoration(
                                     labelText: 'Name',
                                     border: InputBorder.none,
@@ -69,46 +74,60 @@ class AccountPage extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0),
                                 child: TextFormField(
-                                  initialValue: userData.email,
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     labelText: 'Email',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Card(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
-                                child: TextFormField(
-                                  initialValue: userData.phoneNo,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelText: 'Mobile',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Card(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
-                                child: TextFormField(
-                                  initialValue: userData.userId,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelText: 'User ID',
                                   ),
                                   enabled: false,
                                 ),
                               ),
                             ),
                             SizedBox(height: 10),
+                            Card(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: TextFormField(
+                                  controller: phoneNoController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    labelText: 'Mobile',
+                                  ),
+                                  enabled: false,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            SizedBox(height: 10),
                             ElevatedButton(
-                                onPressed: () {}, child: Text("Edit Profile")),
+                              onPressed: () async {
+                                // Handle edit profile button click
+
+                                // Retrieve updated values from the form
+                                String updatedName = nameController.text;
+                                String updatedEmail = emailController.text;
+                                String updatedPhoneNo = phoneNoController.text;
+
+                                // Update the user data
+                                UserModel updatedUserData = UserModel(
+                                  id: userData.id,
+                                  fullName: updatedName,
+                                  email: updatedEmail,
+                                  phoneNo: updatedPhoneNo,
+                                  password: userData
+                                      .password, // Add the missing password field
+                                  userId: userData.userId,
+                                  userType: userData.userType,
+                                );
+                                await controller.updateUser(updatedUserData);
+
+                                // Show a snackbar or perform any other action to indicate the profile update success
+                                Get.snackbar(
+                                    'Success', 'Profile updated successfully');
+                              },
+                              child: Text("Edit Profile"),
+                            ),
                           ],
                         ),
                       ),

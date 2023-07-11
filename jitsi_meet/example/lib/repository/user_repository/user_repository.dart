@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:DLP/screens/admin/models/user_model.dart';
+import 'package:DLP/screens/admin/screens/student_user.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
@@ -34,6 +35,19 @@ class UserRepository extends GetxController {
 
     final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
     return userData;
+  }
+
+  deleteUser(String id) async {
+    final userRef = FirebaseFirestore.instance.collection('Users').doc(id);
+    await userRef.delete().whenComplete(() {
+      Get.snackbar(
+        "Success",
+        "User Has Been Deleted.",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green.withOpacity(0.5),
+        colorText: Colors.green,
+      ); // Replace '/student-page' with the actual route of your student page
+    });
   }
 
   Future<List<UserModel>> getAllUsers() async {

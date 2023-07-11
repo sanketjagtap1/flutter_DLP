@@ -26,58 +26,59 @@ class _CoursesPageState extends State<CoursesPage> {
           builder: ((context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (c, index) {
-                          return Column(
-                            children: [
-                              Card(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Text(
-                                        snapshot.data![index].courseName,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18.0,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          10.0, 0, 10.0, 10.0),
-                                      child: Text(
-                                        snapshot.data![index].desc,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(width: 10.0),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        elevation: 4.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(12.0),
                               ),
-                              const SizedBox(
-                                height: 10.0,
+                              child: Image.network(
+                                snapshot.data![index].imgUrl,
+                                height: 120.0,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Icon(Icons.error),
                               ),
-                            ],
-                          );
-                        },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data![index].courseName,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.0),
+                                  Text(
+                                    snapshot.data![index].desc,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 );
               } else if (snapshot.hasError) {
                 return Center(child: Text(snapshot.error.toString()));
