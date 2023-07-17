@@ -19,6 +19,13 @@ class ProfileController extends GetxController {
     }
   }
 
+  updateUser1(UserModel user) async {
+    await _userRepo.updateUser(user).then((value) {
+      FirebaseAuth.instance.signOut();
+      Get.to(LoginScreen());
+    });
+  }
+
   Future<void> updateUser(UserModel updatedUserData) async {
     try {
       await FirebaseFirestore.instance

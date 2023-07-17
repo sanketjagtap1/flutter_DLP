@@ -31,6 +31,49 @@ class studentPage extends StatelessWidget {
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  if (snapshot.data![index].status == 'Pending')
+                                    IconButton(
+                                      icon: Icon(Icons.check),
+                                      onPressed: () {
+                                        UserModel user = UserModel(
+                                            fullName:
+                                                snapshot.data![index].fullName,
+                                            email: snapshot.data![index].email,
+                                            phoneNo:
+                                                snapshot.data![index].phoneNo,
+                                            password:
+                                                snapshot.data![index].password,
+                                            userId:
+                                                snapshot.data![index].userId,
+                                            id: snapshot.data![index].id,
+                                            status: 'Accept',
+                                            userType: 'teacher');
+                                        controller.updateUser(user);
+                                        // Handle approve button click
+                                        // ...
+                                      },
+                                    ),
+                                  if (snapshot.data![index].status == 'Pending')
+                                    IconButton(
+                                      icon: Icon(Icons.close),
+                                      onPressed: () {
+                                        // Handle reject button click
+                                        UserModel user = UserModel(
+                                            fullName:
+                                                snapshot.data![index].fullName,
+                                            email: snapshot.data![index].email,
+                                            phoneNo:
+                                                snapshot.data![index].phoneNo,
+                                            password:
+                                                snapshot.data![index].password,
+                                            userId:
+                                                snapshot.data![index].userId,
+                                            status: 'Reject',
+                                            userType: 'teacher');
+                                        controller.updateUser(user);
+                                        // ...
+                                      },
+                                    ),
                                   IconButton(
                                     icon: Icon(Icons.delete),
                                     onPressed: () {

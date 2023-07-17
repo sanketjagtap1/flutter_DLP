@@ -21,6 +21,7 @@ sugnUpUser(fullname, email, phone, password) async {
     password: password,
     userId: userId!.uid,
     userType: 'student',
+    status: 'Approved',
   );
 
   await userRepo.createUser(user);

@@ -9,21 +9,21 @@ class UsersPage extends StatelessWidget {
     final controller = Get.put(ProfileController());
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: FutureBuilder<List<UserModel>>(
+          child: Container(
+        padding: const EdgeInsets.all(10),
+        child: FutureBuilder<List<UserModel>>(
             future: controller.getAllTeacherUsers(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (c, index) {
-                      return Column(
-                        children: [
-                          Card(
-                            child: ListTile(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (c, index) {
+                        return Column(
+                          children: [
+                            Card(
+                                child: ListTile(
                               iconColor: Colors.blue,
                               leading: Icon(Icons.person),
                               title: Text(snapshot.data![index].fullName),
@@ -31,24 +31,6 @@ class UsersPage extends StatelessWidget {
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  IconButton(
-                                    icon: Icon(Icons.check),
-                                    onPressed: () {
-                                      // Handle approve button press
-                                      controller.updateUser(
-                                        snapshot.data as UserModel,
-                                      );
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      // Handle reject button press
-                                      controller.updateUser(
-                                        snapshot.data as UserModel,
-                                      );
-                                    },
-                                  ),
                                   IconButton(
                                     icon: Icon(Icons.delete),
                                     onPressed: () {
@@ -80,15 +62,13 @@ class UsersPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                            )),
+                            const SizedBox(
+                              height: 10.0,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                          ],
+                        );
+                      });
                 } else if (snapshot.hasError) {
                   return Center(child: Text(snapshot.error.toString()));
                 } else {
@@ -97,10 +77,8 @@ class UsersPage extends StatelessWidget {
               } else {
                 return Center(child: CircularProgressIndicator());
               }
-            }),
-          ),
-        ),
-      ),
+            })),
+      )),
     );
   }
 }

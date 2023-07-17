@@ -80,7 +80,8 @@ class UserRepository extends GetxController {
         phoneNo: user.phoneNo,
         password: user.password,
         userId: user.userId,
-        userType: "teacher");
+        status: 'Pending',
+        userType: user.userType);
 
     print(userData.userType);
     await _db
