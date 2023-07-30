@@ -1,3 +1,4 @@
+import 'package:DLP/screens/admin/models/user_model.dart';
 import 'package:DLP/screens/student/model/enroll_model.dart';
 import 'package:DLP/screens/teacher/model/course_model.dart';
 import 'package:DLP/screens/teacher/model/lecture_model.dart';
@@ -120,6 +121,18 @@ class TeacherRepository extends GetxController {
 
     final userData =
         snapshot.docs.map((e) => EnrollModel.fromSnapshot(e)).toList();
+    return userData;
+  }
+
+  // getting data on the basis of ids
+  // get lecture data
+  Future<List<UserModel>> getUsers(List<dynamic> sudentIds) async {
+    final snapshot =
+        await _db.collection("Users").where("UserID", whereIn: sudentIds).get();
+
+    final userData =
+        snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
+
     return userData;
   }
 }

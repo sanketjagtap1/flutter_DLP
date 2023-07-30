@@ -214,7 +214,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         top: Radius.circular(12.0),
                       ),
                       child: Image.network(
-                        course.imgUrl,
+                        course.imgUrl.toString(),
                         height: 120.0,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
@@ -262,7 +262,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                 color: Colors.grey,
                               ),
                             ),
-                            Text(formatDate(course.starDate))
+                            Text(formatDate(course.starDate.toString()))
                           ],
                         )),
                     Padding(
@@ -383,7 +383,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                         top: Radius.circular(12.0),
                                       ),
                                       child: Image.network(
-                                        filteredData[index].imgUrl,
+                                        filteredData[index].imgUrl.toString(),
                                         height: 120.0,
                                         fit: BoxFit.cover,
                                         errorBuilder:
@@ -419,7 +419,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                       padding: EdgeInsets.symmetric(
                                           vertical: 10.0, horizontal: 16),
                                       child: Text(
-                                        "Start Date: ${formatDate(filteredData[index].starDate)}",
+                                        "Start Date: ${formatDate(filteredData[index].starDate.toString())}",
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           color: Colors.grey,

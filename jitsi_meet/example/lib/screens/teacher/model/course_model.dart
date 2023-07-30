@@ -4,21 +4,21 @@ class CourseModel {
   final String? id;
   final String courseName;
   final String desc;
-  final String starDate;
+  final String? starDate;
   final int duration;
   final int fees;
-  final String userId;
-  final String imgUrl;
+  final String? userId;
+  final String? imgUrl;
 
   const CourseModel({
     this.id,
     required this.courseName,
     required this.desc,
-    required this.starDate,
+    this.starDate,
     required this.duration,
     required this.fees,
-    required this.userId,
-    required this.imgUrl,
+    this.userId,
+    this.imgUrl,
   });
 
   toJson() {
